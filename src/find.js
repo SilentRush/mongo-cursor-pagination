@@ -34,8 +34,6 @@ module.exports = async function(collection, params) {
   const cursorQuery = generateCursorQuery(params);
   const $sort = generateSort(params);
 
-  console.log('test',cursorQuery,$sort);
-
   // Support both the native 'mongodb' driver and 'mongoist'. See:
   // https://www.npmjs.com/package/mongoist#cursor-operations
   const findMethod = collection.findAsCursor ? 'findAsCursor' : 'find';
