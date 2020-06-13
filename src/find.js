@@ -38,7 +38,7 @@ module.exports = async function(collection, params) {
   // https://www.npmjs.com/package/mongoist#cursor-operations
   const findMethod = collection.findAsCursor ? 'findAsCursor' : 'find';
 
-  const query = collection[findMethod]({ $and: [cursorQuery, params.query] }, {projection:params.fields});
+  const query = collection[findMethod]({ $and: [cursorQuery, params.query] });
 
   /**
    * IMPORTANT
@@ -51,7 +51,7 @@ module.exports = async function(collection, params) {
    */
   const collatedQuery = config.COLLATION ? query.collation(config.COLLATION) : query;
   // Query one more element to see if there's another page.
-  const cursor = collatedQuery.sort($sort).limit(params.limit + 1);
+  const cursor = collatedQuery.project(params.fields).sort($sort).limit(params.limit + 1);
   if (params.hint) cursor.hint(params.hint);
   const results = await cursor.toArray();
 
