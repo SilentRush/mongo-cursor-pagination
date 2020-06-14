@@ -12,7 +12,6 @@ module.exports = {
    * @return {Object} The object containing pagination properties
    */
   prepareResponse(results, params) {
-    console.log(results,params);
     const hasMore = results.length > params.limit;
     const shouldSecondarySortOnId = params.paginatedField !== '_id';
     // Remove the extra element that we added to 'peek' to see if there were more entries.
