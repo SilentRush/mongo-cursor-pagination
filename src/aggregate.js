@@ -39,7 +39,23 @@ module.exports = async function aggregate(collection, params) {
   const cursorQuery = generateCursorQuery(params);
   const $sort = generateSort(params);
 
-  let index = _.findIndex(params.aggregation, (step) => !_.isEmpty(step.$match));
+  let index = null;
+  if(params.matchIndex){
+    let count = 0;
+    for(var i = 0; i < params.aggregation.length; i++){
+      let step = params.aggregation[i];
+      if(!_.isEmpty(step.$match)){
+        count += 1;
+        if(count >= params.matchIndex){
+          index = i;
+          break;
+        }
+      }
+    }
+  }else{
+    index = _.findIndex(params.aggregation, (step) => !_.isEmpty(step.$match));
+  }
+  
 
   if (index < 0) {
     params.aggregation.unshift({ $match: cursorQuery });
