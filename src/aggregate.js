@@ -56,7 +56,7 @@ module.exports = async function aggregate(collection, params) {
     index = _.findIndex(params.aggregation, (step) => !_.isEmpty(step.$match));
   }
 
-  console.log('dbcurs',paramas.matchIndex,index)
+  console.log('dbcurs',params.matchIndex,index)
   
 
   if (index < 0) {
